@@ -252,7 +252,7 @@
             .suggest({type:["people/person"]})
               .bind("fb-select", function(e, data) {
                 console.log("fb-select", data);
-                hiddenUriEl.val(data.id);
+                hiddenUriEl.val("http://rdf.freebase.com/ns" + data.id);
               });
 
 		

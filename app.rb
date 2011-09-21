@@ -2,10 +2,13 @@ require "rubygems"
 require "bundler/setup"
 
 require 'sinatra'
+require 'rack/linkeddata'
 
 require File.dirname(__FILE__)+'/lib/annotation'
 
 class CultureHack < Sinatra::Base
+  use Rack::LinkedData::ContentNegotiation
+  
   get '/' do
     "Hello World! :)"
   end
@@ -20,5 +23,9 @@ class CultureHack < Sinatra::Base
     uri = Annotation.save( params )
     content_type 'application/json'
     { "annotation_id" => uri.to_s }.to_json
+  end
+  
+  get '/annotations/:id/?' do
+    Annotation.describe(params[:id])
   end
 end

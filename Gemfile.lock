@@ -29,6 +29,9 @@ GEM
       metaclass (~> 0.0.1)
     nokogiri (1.5.0)
     rack (1.3.3)
+    rack-linkeddata (0.3.0)
+      linkeddata (~> 0.3.0)
+      rack (>= 1.0)
     rdf (0.3.3)
       addressable (= 2.2.4)
     rdf-isomorphic (0.3.4)
@@ -61,6 +64,7 @@ PLATFORMS
 
 DEPENDENCIES
   kasabi
+  rack-linkeddata
   rdf
   sinatra
   uuid

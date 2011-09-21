@@ -23,11 +23,14 @@ function Overlay(){
 		// App
 		self.loadJS(self.sourceURL + "/../js/app.js", "app", function () {
 			var app = new App(self.jQuery),
+				url = document.location.host,
 				imgSel;
-			if (/(\.dev|local)/.test(document.location.host)) {
+			if (/(\.dev|local)/.test(url)) {
 				imgSel = "#picture";
-			} else {
+			} else if (/www.gac.culture.gov.uk/.test(url)) {
 				imgSel = "#contentMain #zoomImage img";
+			} else if (/www.artfinder.com/.test(url)) {
+				imgSel = ".depictions .frame img";
 			}
 			app.init(imgSel);
 		});

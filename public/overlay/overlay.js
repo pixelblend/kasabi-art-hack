@@ -21,16 +21,16 @@ function Overlay(){
 	this.start = function(){
 		console.log("Everything's ready");
 		//self.removeLoadedScripts();
-		//var $ = self.jQuery;
-		//var suggestInput = $("body").append('<div id="art-hack"><input type="text" id="art-hack-suggest"/></div>');
-		//$("#art-hack-suggest").suggest({type:FREEBASE_TOPICS})
-		//					  .bind("fb-select", function(e, data) {
-		//					    console.log("fb-select", data);
-		//					  });
-		//	// App
+		// App
 		self.loadJS(self.sourceURL + "/../js/app.js", "app", function () {
-			var app = new App(self.jQuery);
-			app.init("#contentMain #zoomImage img");
+			var app = new App(self.jQuery),
+				imgSel;
+			if (/.dev/.test(document.location.host)) {
+				imgSel = "#picture";
+			} else {
+				imgSel = "#contentMain #zoomImage img";
+			}
+			app.init(imgSel);
 		});
 	};
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HTML5 Web Importer</title>
+  <style>body { font-family: sans-serif; }</style>
+</head>
+<body>
+
+<h1>HTML5 Web Importer</h1>
+
+<h2>Bookmarklet</h2>
+<div><a id="bookmarklet"></a></div>
+
+<h2>Test Page</h2>
+<div><a href="http://www.gac.culture.gov.uk/work.aspx?obj=12938">Test Page</a></div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<script>
+// EDIT THIS URL to point to overlay.js
+var script = function(){
+  var s=document.createElement("script");
+	s.src="http://kasabi.dev/overlay/overlay.js" + "?" + Math.random();
+	s.id="art-hack-loader";
+	document.body.appendChild(s);
+};
+
+var bookmarklet = document.getElementById("bookmarklet");
+bookmarklet.setAttribute("href", "javascript:(" + script.toString().replace(/\s+/g, "%20") + ")();");
+bookmarklet.textContent = "Import This";
+document.location = bookmarklet.href;
+</script>
+
+</body>
+</html>

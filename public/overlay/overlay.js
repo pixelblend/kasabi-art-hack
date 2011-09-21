@@ -13,8 +13,8 @@ function Overlay(){
 		self.loadJQuery(self.jQueryLoaded);
 	};
 
-	this.start = function() {
-		console.log("ready")		
+	this.start = function(){
+		console.log("Everything's ready");
 	};
 
 	// determine the base URL; remove the loader script element
@@ -55,7 +55,20 @@ function Overlay(){
 	this.loadJQuery = function(callback){
 		// if jQuery is already loaded, just run the callback
 		if (document.getElementById("mendeley-jquery")) return callback ? callback() : true;
-		self.loadJS("https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js", "mendeley-jquery", callback);
+		self.loadJS("https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js", "mendeley-jquery", function () {
+			self.loadScripts(callback);
+		});
+	};
+
+	this.loadScripts = function (callback) {
+		var numScriptsLoaded = 0;
+		var loaded = function () {
+			numScriptsLoaded++;
+			if (numScriptsLoaded === 1) {
+				callback();
+			}
+		};
+		self.loadJS("http://freebaselibs.com/static/suggest/1.3/suggest.min.js", "freebase-suggest", loaded);
 	};
 
 	// called after jQuery is loaded

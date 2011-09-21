@@ -244,8 +244,8 @@
         image.canvas.children('.image-annotate-edit').show();
 
         // Add the note (which we'll load with the form afterwards)
-        var form = $('<div id="image-annotate-edit-form"><form><textarea id="image-annotate-text" name="text" rows="3" cols="30">' + this.note.text + '</textarea></form></div>');
-        this.form = form;
+        //var form = $('<div id="image-annotate-edit-form"><form><textarea id="image-annotate-text" name="text" rows="3" cols="30">' + this.note.text + '</textarea></form></div>');
+        //this.form = form;
 
         var makeHiddenElAndAppendToForm = function(name, form) {
             return $("<input/>", { type: "hidden", id: "image-annotate-" + name, name: name }).appendTo(form);
@@ -273,7 +273,8 @@
               });
 
 		
-        this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form);
+		form = $("<div/>", { id: "image-annotate-edit-form" }).append(form);
+        this.form = form;
 
         $('body').append(this.form);
         this.form.css('left', this.area.offset().left + 'px');

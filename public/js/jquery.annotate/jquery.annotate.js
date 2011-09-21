@@ -151,6 +151,7 @@
             // Save via AJAX
             if (image.useAjax) {
                 $.ajax({
+                    type: "POST",
                     url: image.saveUrl,
                     data: form.serialize(),
                     error: function(e) { alert("An error occured saving that note.") },

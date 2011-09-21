@@ -12,18 +12,15 @@
 <h2>Bookmarklet</h2>
 <div><a id="bookmarklet"></a></div>
 
-<h2>Test Pages</h2>
-<div><a href="/test.html">Test Page</a></div>
-
-<h2>Actual Page</h2>
-<div><a href="http://www.gac.culture.gov.uk/work.aspx?obj=12938">Actual Page</a></div>
+<h2>Test Page</h2>
+<div><a href="http://www.gac.culture.gov.uk/work.aspx?obj=12938">Test Page</a></div>
 
 
 <script>
 // EDIT THIS URL to point to overlay.js
 var script = function(){
   var s=document.createElement("script");
-	s.src="http://kasabi.dev/overlay/overlay.js" + "?" + Math.random();
+	s.src="http://local/2011/09/kasabi-art-hack/public/overlay/overlay.js" + "?" + Math.random();
 	s.id="art-hack-loader";
 	document.body.appendChild(s);
 };

@@ -15,7 +15,6 @@
 <h2>Test Page</h2>
 <div><a href="http://www.gac.culture.gov.uk/work.aspx?obj=12938">Test Page</a></div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 <script>
 // EDIT THIS URL to point to overlay.js
@@ -27,9 +26,10 @@ var script = function(){
 };
 
 var bookmarklet = document.getElementById("bookmarklet");
-bookmarklet.setAttribute("href", "javascript:(" + script.toString().replace(/\s+/g, "%20") + ")();");
+var encodedBookmarklet = script.toString();
+bookmarklet.setAttribute("href", "javascript:(" + encodedBookmarklet + ")();");
 bookmarklet.textContent = "Import This";
-document.location = bookmarklet.href;
+//document.location = bookmarklet.href;
 </script>
 
 </body>

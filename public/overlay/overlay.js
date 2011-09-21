@@ -6,15 +6,15 @@ function Overlay(){
 	var messageEvent, sourceURL, Zotero = {};
 
 	this.init = function(){
-		self.removeLoader();
+		//self.removeLoader();
 		self.originalURL = window.location.href;
-		self.originalHTML = document.documentElement.innerHTML;
-		self.loadCSS(self.sourceURL + "/overlay.css", "mendeley-sidebar-css-loader");
+		//self.originalHTML = document.documentElement.innerHTML;
+		//self.loadCSS(self.sourceURL + "/overlay.css", "mendeley-sidebar-css-loader");
 		self.loadJQuery(self.jQueryLoaded);
 	};
 
 	this.start = function() {
-		console.log("everything loaded");
+		console.log("ready")		
 	};
 
 	// determine the base URL; remove the loader script element

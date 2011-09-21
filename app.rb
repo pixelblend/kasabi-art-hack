@@ -33,4 +33,11 @@ class CultureHack < Sinatra::Base
   get '/annotations/:id/?' do
     Annotation.describe(params[:id])
   end
+  
+  get '/related/?' do
+    content_type 'application/json'
+    subject = params[:subject] || 'http://data.kasabi.com/dataset/government-art-collection/sitters/130697'
+    
+    Annotation.related(subject).to_json
+  end
 end

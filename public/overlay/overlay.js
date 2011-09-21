@@ -24,7 +24,7 @@ function Overlay(){
 		self.loadJS(self.sourceURL + "/../js/app.js", "app", function () {
 			var app = new App(self.jQuery),
 				imgSel;
-			if (/.dev/.test(document.location.host)) {
+			if (/(\.dev|local)/.test(document.location.host)) {
 				imgSel = "#picture";
 			} else {
 				imgSel = "#contentMain #zoomImage img";

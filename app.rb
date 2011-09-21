@@ -2,7 +2,9 @@ require "rubygems"
 require "bundler/setup"
 
 require 'sinatra'
+require File.dirname(__FILE__)+'/lib/annotation'
 
+CONFIG = YAML::load( File.open( 'config.yml' ) )
 
 class CultureHack < Sinatra::Base
   get '/' do
@@ -27,5 +29,9 @@ class CultureHack < Sinatra::Base
                "id": "e7f44ac5-bcf2-412d-b440-6dbb8b19ffbe", 
                "editable": true } ]   
       *
+  end
+  
+  get '/annotations/1' do
+    Annotation.list('http://www.gac.culture.gov.uk/images/standard/17686.jpg').to_json
   end
 end

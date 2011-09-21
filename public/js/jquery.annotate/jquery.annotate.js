@@ -96,7 +96,7 @@
         ///		Loads the annotations from the "getUrl" property passed in on the
         ///     options object.
         ///	</summary>
-        $.getJSON(image.getUrl + '?ticks=' + $.fn.annotateImage.getTicks(), function(data) {
+        $.getJSON(image.getUrl, function(data) {
             image.notes = data;
             $.fn.annotateImage.load(image);
         });

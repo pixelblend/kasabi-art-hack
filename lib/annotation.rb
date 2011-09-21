@@ -34,7 +34,7 @@ class Annotation
   end  
   
   def self.save( params )
-    store = dataset.store_api_client
+    store = dataset("http://data.kasabi.com/dataset/government-art-collection-annotations").store_api_client
     repository, uri = create_rdf( params )
     store.store_data( repository.dump(:rdfxml) )
     return uri      

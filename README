@@ -1,1 +1,29 @@
 Mashup of Goverment Art Collection details, for Kasabi Culture Hack Day.
+
+To fetch
+
+ANNOTATION PROTOCOL
+-------------------
+
+Fetch annotations for an image:
+
+ GET http://kasabi-art-hack.heroku.com/annotations?image=...
+
+e.g.
+
+ http://kasabi-art-hack.heroku.com/annotations?image=http://www.gac.culture.gov.uk/images/standard/17686.jpg
+
+Add annotation to an image:
+
+ http://kasabi-art-hack.heroku.com/annotations
+   ?image=...
+   &top=...
+   &left=...
+   &width=...
+   &height=...
+   &text=...
+   &subject=<...uri of subject...>
+   
+   
+   
+

@@ -1,6 +1,5 @@
 /// <reference path="jquery-1.2.6-vsdoc.js" />
 (function($) {
-
     $.fn.annotateImage = function(options) {
         ///	<summary>
         ///		Creates annotations on the given image.
@@ -243,6 +242,22 @@
         var form = $('<div id="image-annotate-edit-form"><form><textarea id="image-annotate-text" name="text" rows="3" cols="30">' + this.note.text + '</textarea></form></div>');
         this.form = form;
 
+		var form = $("<form/>");
+		var label = $("<label/>", { "for": "image-annotate-text" }).text("Name ").appendTo(form);
+        var hiddenUriEl = $("<input/>", { type: "hidden", id: "image-annotate-uri", name: "uri" }).appendTo(form);
+
+		$("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" })
+            .val(this.note.text)
+            .appendTo(label)
+            .suggest({type:["people/person"]})
+              .bind("fb-select", function(e, data) {
+                console.log("fb-select", data);
+                hiddenUriEl.val("http://rdf.freebase.com/ns" + data.id);
+              });
+
+		
+        this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form);
+
         $('body').append(this.form);
         this.form.css('left', this.area.offset().left + 'px');
         this.form.css('top', (parseInt(this.area.offset().top) + parseInt(this.area.height()) + 7) + 'px');
@@ -441,4 +456,4 @@
         this.editable = true;
     };
 
-})(jQuery);
+})(arthack.jQuery);

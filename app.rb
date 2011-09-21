@@ -2,11 +2,15 @@ require "rubygems"
 require "bundler/setup"
 
 require 'sinatra'
-require 'rack/linkeddata'
 
 require File.dirname(__FILE__)+'/lib/annotation'
 
 class CultureHack < Sinatra::Base
+  before do 
+    headers "Access-Control-Allow-Origin" => "*"
+  end
+
+  get '/status' do
   use Rack::LinkedData::ContentNegotiation
   
   get '/' do

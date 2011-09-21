@@ -23,7 +23,7 @@
         // Add the canvas
         this.canvas = $('<div class="image-annotate-canvas"><div class="image-annotate-view"></div><div class="image-annotate-edit"><div class="image-annotate-edit-area"></div></div></div>');
         this.canvas.children('.image-annotate-edit').hide();
-        this.canvas.children('.image-annotate-view').hide();
+        //this.canvas.children('.image-annotate-view').hide();
         this.image.after(this.canvas);
 
         // Give the canvas and the container their size and background
@@ -39,13 +39,13 @@
                 $(this).children('.image-annotate-view').show();
             }
         }, function() {
-            $(this).children('.image-annotate-view').hide();
+            //$(this).children('.image-annotate-view').hide();
         });
 
         this.canvas.children('.image-annotate-view').hover(function() {
             $(this).show();
         }, function() {
-            $(this).hide();
+            //$(this).hide();
         });
 
         // load the notes
@@ -178,6 +178,7 @@
             }
 
             editable.destroy();
+			this.canvas.children('.image-annotate-view').show();
         });
         editable.form.append(ok);
     };
@@ -251,7 +252,6 @@
         }
 
 		var form = $("<form/>");
-		var label = $("<label/>", { "for": "image-annotate-text" }).text("Name ").appendTo(form);
         var subject = makeHiddenElAndAppendToForm("subject", form);
         var imageHiddenField = makeHiddenElAndAppendToForm("image", form);
         imageHiddenField.val( image.get(0).src) ;
@@ -262,7 +262,9 @@
         //var width  = makeHiddenElAndAppendToForm("width", form);
         //var height = makeHiddenElAndAppendToForm("height", form);
         
-		$("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" })
+        // Subject's name field
+        var label = $("<label/>", { "for": "image-annotate-text" }).text("Who is this? ").appendTo(form);
+		var suggestInputField = $("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" })
             .val(this.note.text)
             .appendTo(label)
             .suggest({type:"/people/person"})
@@ -271,8 +273,18 @@
                 subject.val("http://rdf.freebase.com/ns" + data.id);
               });
 
+        // Suggested sitters
+        var sitters = $("#contentWorkSitters ul a").clone();
+        sitters.bind('click', function(evt){
+            var nameToSuggest = $(this).text().replace(/,/, '');
+            suggestInputField.val(nameToSuggest).keyup();
+            return false;
+        });
+        var suggestedSitters = $('<div class="suggested-sitters">Is this?</div>');
+        suggestedSitters.append(sitters);
 		
-        this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form);
+        this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form)
+                                                                   .append(suggestedSitters);
 
         $('body').append(this.form);
         this.form.css('left', this.area.offset().left + 'px');

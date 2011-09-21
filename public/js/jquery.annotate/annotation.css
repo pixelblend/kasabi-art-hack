@@ -21,12 +21,14 @@
     border: solid 1px #ccc;
     background-position: left top;
     background-repeat: no-repeat;
+	background-size: 100%;
+	-webkit-background-size: 100%;
     display: block;
     margin: 0;
     position: relative;
 }
 .image-annotate-view {
-    display: none;
+    /*display: none;*/
     position: relative;
 }
 .image-annotate-area {

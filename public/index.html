@@ -20,13 +20,13 @@
 // EDIT THIS URL to point to overlay.js
 var script = function(){
   var s=document.createElement("script");
-	s.src="http://kasabi.dev/overlay/overlay.js" + "?" + Math.random();
+	s.src="http://%HOST%/overlay/overlay.js" + "?" + Math.random();
 	s.id="art-hack-loader";
 	document.body.appendChild(s);
 };
 
 var bookmarklet = document.getElementById("bookmarklet");
-var encodedBookmarklet = script.toString();
+var encodedBookmarklet = script.toString().replace(/%HOST%/, document.location.host);
 bookmarklet.setAttribute("href", "javascript:(" + encodedBookmarklet + ")();");
 bookmarklet.textContent = "Annotate";
 //document.location = bookmarklet.href;

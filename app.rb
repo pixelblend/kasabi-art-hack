@@ -14,6 +14,11 @@ class CultureHack < Sinatra::Base
 
   use Rack::LinkedData::ContentNegotiation
   
+  configure do |app|
+    set :static, true
+    set :public, File.dirname(__FILE__) + "/public"        
+  end
+  
   get '/status' do
     "Hello World! :)"
   end

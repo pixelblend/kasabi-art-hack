@@ -242,17 +242,29 @@
         var form = $('<div id="image-annotate-edit-form"><form><textarea id="image-annotate-text" name="text" rows="3" cols="30">' + this.note.text + '</textarea></form></div>');
         this.form = form;
 
+        var makeHiddenElAndAppendToForm = function(name, form) {
+            return $("<input/>", { type: "hidden", id: "image-annotate-" + name, name: name }).appendTo(form);
+        }
+
 		var form = $("<form/>");
 		var label = $("<label/>", { "for": "image-annotate-text" }).text("Name ").appendTo(form);
-        var hiddenUriEl = $("<input/>", { type: "hidden", id: "image-annotate-uri", name: "uri" }).appendTo(form);
+        var subject = makeHiddenElAndAppendToForm("subject", form);
+        var imageHiddenField = makeHiddenElAndAppendToForm("image", form);
+        imageHiddenField.val( image.get(0).src) ;
 
+        // went a bit made, these probably aren't needed
+        //var top    = makeHiddenElAndAppendToForm("top", form);
+        //var left   = makeHiddenElAndAppendToForm("left", form);
+        //var width  = makeHiddenElAndAppendToForm("width", form);
+        //var height = makeHiddenElAndAppendToForm("height", form);
+        
 		$("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" })
             .val(this.note.text)
             .appendTo(label)
             .suggest({type:["people/person"]})
               .bind("fb-select", function(e, data) {
                 console.log("fb-select", data);
-                hiddenUriEl.val("http://rdf.freebase.com/ns" + data.id);
+                subject.val("http://rdf.freebase.com/ns" + data.id);
               });
 
 		

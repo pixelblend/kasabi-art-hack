@@ -1,6 +1,8 @@
 function App($){
 	var self = this;
 	
+	this.annotationServer = "http://kasabi-art-hack.heroku.com/annotations";
+	
 	this.init = function(imageEl){
 		self.picture = $(imageEl);
 		//self.picture.bind("load", self.loadAnnotations);
@@ -8,31 +10,28 @@ function App($){
 	};
 	
 	this.loadAnnotations = function(){
-		// TODO: fetch with GET, callback = self.annotationsLoaded
-		var annotations = [];
-		self.annotationsLoaded({ annotations: annotations })
-	};
+		var faces = self.picture.faceDetection(); // have to do this before the image gets hidden
 		
-	this.annotationsLoaded = function(data){
-		annotations = this.addDetectedFaces(data.annotations);
-		self.picture.annotateImage({ editable: true, useAjax: false, notes: annotations });		
+		self.picture.annotateImage({ 
+			editable: true, 
+			useAjax: true,
+			getUrl: self.annotationServer + "?image=" + self.picture.get(0).src,
+			saveUrl: self.annotationServer,
+			deleteUrl: self.annotationServer + "?image=" + self.picture.get(0).src
+		});	
+		
+		$.each(faces, self.addAnnotation);
 	};
 	
-	this.addDetectedFaces = function(annotations){
-		console.log(self.picture)
-		var faces = self.picture.faceDetection();
-		$.each(faces, function(i, coords){
-			annotations.push({
-				top: coords.positionY,
-				left: coords.positionX,
-				width: coords.width,
-				height: coords.height,
-				editable: true
-			});
+	this.addAnnotation = function(i, note){
+		console.log(note);
+		var note = new $.fn.annotateView(self.picture, {
+			top: note.positionY,
+			left: note.positionX,
+			width: note.width,
+			height: note.height,
+			editable: true
 		});
-		return annotations;
-	}
+        self.picture.notes.push(note);
+	};
 }
-
-//var app = new App(arthack.jQuery);
-//arthack.jQuery(app.init);

@@ -6,7 +6,11 @@ require 'sinatra'
 require File.dirname(__FILE__)+'/lib/annotation'
 
 class CultureHack < Sinatra::Base
-  get '/' do
+  before do 
+    headers "Access-Control-Allow-Origin" => "*"
+  end
+
+  get '/status' do
     "Hello World! :)"
   end
   

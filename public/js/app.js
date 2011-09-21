@@ -4,11 +4,12 @@ function App($){
 	this.annotationServer = "http://kasabi-art-hack.heroku.com/annotations";
 	
 	this.init = function(imageEl){
+		$.ajaxSetup({ cache: false });
 		self.picture = $(imageEl);
 		//self.picture.bind("load", self.loadAnnotations);
 		self.loadAnnotations();
 	};
-	
+		
 	this.loadAnnotations = function(){
 		var faces = self.picture.faceDetection(); // have to do this before the image gets hidden
 		
@@ -17,10 +18,13 @@ function App($){
 			useAjax: true,
 			getUrl: self.annotationServer + "?image=" + self.picture.get(0).src,
 			saveUrl: self.annotationServer,
-			deleteUrl: self.annotationServer + "?image=" + self.picture.get(0).src
-		});	
-		
-		$.each(faces, self.addAnnotation);
+			deleteUrl: self.annotationServer + "?image=" + self.picture.get(0).src,
+			ready: function(){
+				if (!self.picture.notes.length){
+					$.each(faces, self.addAnnotation);
+				}
+			}
+		});
 	};
 	
 	this.addAnnotation = function(i, note){

@@ -15,6 +15,9 @@ function Overlay(){
 
 	this.start = function(){
 		console.log("Everything's ready");
+		var $ = self.jQuery;
+		var suggestInput = $("body").append('<div id="freebase-info"><input type="text" id="art-hack-suggest"/></div>');
+		$("#art-hack-suggest").suggest("/people");
 	};
 
 	// determine the base URL; remove the loader script element
@@ -69,6 +72,8 @@ function Overlay(){
 			}
 		};
 		self.loadJS("http://freebaselibs.com/static/suggest/1.3/suggest.min.js", "freebase-suggest", loaded);
+		self.loadCSS("http://freebaselibs.com/static/suggest/1.3/suggest.min.css");
+
 	};
 
 	// called after jQuery is loaded

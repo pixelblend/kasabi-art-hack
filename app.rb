@@ -14,6 +14,11 @@ class CultureHack < Sinatra::Base
 
   use Rack::LinkedData::ContentNegotiation
   
+  configure do |app|
+    set :static, true
+    set :public, File.dirname(__FILE__) + "/public"        
+  end
+  
   get '/?' do
     File.read(File.join('public', 'index.html'))
   end
@@ -34,9 +39,9 @@ class CultureHack < Sinatra::Base
     Annotation.describe(params[:id])
   end
   
-  post '/annotations/:id/?' do
-    Annotation.update( params )
-  end
+#  post '/annotations/:id/?' do
+#    Annotation.update( params )
+#  end
   
   get '/related/?' do
     content_type 'application/json'

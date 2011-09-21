@@ -20,7 +20,10 @@ function Overlay(){
 		console.log("Everything's ready");
 		var $ = self.jQuery;
 		var suggestInput = $("body").append('<div id="art-hack"><input type="text" id="art-hack-suggest"/></div>');
-		$("#art-hack-suggest").suggest({type:FREEBASE_TOPICS});
+		$("#art-hack-suggest").suggest({type:FREEBASE_TOPICS})
+							  .bind("fb-select", function(e, data) {
+							    console.log("fb-select", data);
+							  });
 	};
 
 	// determine the base URL; remove the loader script element
@@ -70,13 +73,24 @@ function Overlay(){
 		var numScriptsLoaded = 0;
 		var loaded = function () {
 			numScriptsLoaded++;
-			if (numScriptsLoaded === 1) {
+			if (numScriptsLoaded === 7) {
 				callback();
 			}
 		};
+		// Freebase
 		self.loadJS("http://freebaselibs.com/static/suggest/1.3/suggest.min.js", "freebase-suggest", loaded);
 		self.loadCSS("http://freebaselibs.com/static/suggest/1.3/suggest.min.css");
 
+		self.loadJS("https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js", "ui", loaded);
+		self.loadJS(self.sourceURL + "/../js/jquery.facedetection/facedetection/ccv.js", "ccv", loaded);
+		self.loadJS(self.sourceURL + "/../js/jquery.facedetection/facedetection/face.js", "face", loaded);
+		self.loadJS(self.sourceURL + "/../js/jquery.facedetection/jquery.facedetection.js", "facedetection", loaded);
+
+		// Annotate
+		self.loadJS(self.sourceURL + "/../js/jquery.annotate/jquery.annotate.js", "annotate", loaded);
+
+		// App
+		self.loadJS(self.sourceURL + "/../js/app.js", "app", loaded);
 	};
 
 	// called after jQuery is loaded

@@ -1,0 +1,23 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix a: <http://www.w3.org/2000/10/annotation-ns#> .
+
+@prefix arthack: <http://kasabi-art-hack.heroku.com/schema#> .
+
+<http://kasabi-art-hack.heroku.com/annotations/1> a a:Annotation;
+  a:body "Some text";
+  a:annotates <http://www.gac.culture.gov.uk/images/standard/17686.jpg>;
+  arthack:top "0";
+  arthack:left "0";
+  arthack:height "10";
+  arthack:width "10";
+  dcterms:subject <http://data.kasabi.com/dataset/government-art-collection/sitters/130697>.
+  
+   

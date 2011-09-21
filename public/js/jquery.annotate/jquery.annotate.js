@@ -18,6 +18,7 @@
         this.editable = opts.editable;
         this.useAjax = opts.useAjax;
         this.notes = opts.notes;
+		this.onReadyCallback = opts.ready;
 
         // Add the canvas
         this.canvas = $('<div class="image-annotate-canvas"><div class="image-annotate-view"></div><div class="image-annotate-edit"><div class="image-annotate-edit-area"></div></div></div>');
@@ -78,6 +79,7 @@
         deleteUrl: 'your-delete.rails',
         editable: true,
         useAjax: true,
+		ready: function(){},
         notes: new Array()
     };
 
@@ -99,6 +101,7 @@
         $.getJSON(image.getUrl, function(data) {
             image.notes = data;
             $.fn.annotateImage.load(image);
+			if (typeof image.onReadyCallback == "function") image.onReadyCallback();
         });
     };
 
@@ -151,7 +154,7 @@
             // Save via AJAX
             if (image.useAjax) {
                 $.ajax({
-					type: "POST",
+                    type: "POST",
                     url: image.saveUrl,
                     data: form.serialize(),
                     error: function(e) { alert("An error occured saving that note.") },
@@ -262,7 +265,7 @@
 		$("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" })
             .val(this.note.text)
             .appendTo(label)
-            .suggest({type:["people/person"]})
+            .suggest({type:"/people/person"})
               .bind("fb-select", function(e, data) {
                 console.log("fb-select", data);
                 subject.val("http://rdf.freebase.com/ns" + data.id);
@@ -318,6 +321,8 @@
         ///		Defines a annotation area.
         ///	</summary>
         this.image = image;
+
+		note.editable = true; // always editable
 
         this.note = note;
 
@@ -416,8 +421,8 @@
 
                 if (annotation.image.useAjax) {
                     $.ajax({
-						type: "DELETE",
-                        url: annotation.image.getUrl,
+                        url: annotation.image.deleteUrl,
+                        data: form.serialize(),
                         error: function(e) { alert("An error occured deleting that note.") }
                     });
                 }

@@ -1,7 +1,4 @@
-#art-hack {
-	position: fixed;
-	right: 20px;
-	top: 20px;
-	background-color: rgba(200,200,200,0.8);
-	border: 3px solid rgba(200,200,200,0.4);
+.fbs-pane,
+.fbs-flyout-pane {
+	z-index: 5000;
 }

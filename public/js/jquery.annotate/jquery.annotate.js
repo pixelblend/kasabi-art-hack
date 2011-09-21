@@ -23,7 +23,7 @@
         // Add the canvas
         this.canvas = $('<div class="image-annotate-canvas"><div class="image-annotate-view"></div><div class="image-annotate-edit"><div class="image-annotate-edit-area"></div></div></div>');
         this.canvas.children('.image-annotate-edit').hide();
-        this.canvas.children('.image-annotate-view').hide();
+        //this.canvas.children('.image-annotate-view').hide();
         this.image.after(this.canvas);
 
         // Give the canvas and the container their size and background
@@ -39,13 +39,13 @@
                 $(this).children('.image-annotate-view').show();
             }
         }, function() {
-            $(this).children('.image-annotate-view').hide();
+            //$(this).children('.image-annotate-view').hide();
         });
 
         this.canvas.children('.image-annotate-view').hover(function() {
             $(this).show();
         }, function() {
-            $(this).hide();
+            //$(this).hide();
         });
 
         // load the notes
@@ -178,6 +178,7 @@
             }
 
             editable.destroy();
+			this.canvas.children('.image-annotate-view').show();
         });
         editable.form.append(ok);
     };

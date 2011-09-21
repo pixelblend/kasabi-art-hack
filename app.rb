@@ -14,8 +14,8 @@ class CultureHack < Sinatra::Base
 
   use Rack::LinkedData::ContentNegotiation
   
-  get '/status' do
-    "Hello World! :)"
+  get '/?' do
+    File.read(File.join('public', 'index.html'))
   end
   
   get '/annotations/?' do

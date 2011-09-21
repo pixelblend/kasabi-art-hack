@@ -77,7 +77,7 @@ function Overlay(){
 
 	// load jQuery
 	this.loadJQuery = function(callback){
-		self.loadJS(self.sourceURL + "/../js/jquery.min.js", "mendeley-jquery", function () {
+		self.loadJS(self.sourceURL + "/../js/jquery.min.js", "arthack-jquery", function () {
 	console.log(jQuery)
 			self.jQuery = jQuery.noConflict(true); // refer to jQuery as "self.jQuery"
 	console.log(self.jQuery)

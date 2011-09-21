@@ -9,7 +9,7 @@ class CultureHack < Sinatra::Base
     "Hello World! :)"
   end
   
-  get '/annotations' do
+  get '/annotations/?' do
     content_type 'application/json'
     @image = params[:url] || 'http://www.gac.culture.gov.uk/images/standard/17686.jpg'
     Annotation.list(@image).to_json

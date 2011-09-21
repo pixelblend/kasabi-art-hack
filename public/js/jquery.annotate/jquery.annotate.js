@@ -279,11 +279,11 @@
             suggestInputField.val(nameToSuggest).keyup();
             return false;
         });
-        var suggestedSitters = $('<div class="suggested-sitters">Suggested sitters:</div>');
+        var suggestedSitters = $('<div class="suggested-sitters">Is this?</div>');
         suggestedSitters.append(sitters);
-        form.append(suggestedSitters);
 		
-        this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form);
+        this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form)
+                                                                   .append(suggestedSitters);
 
         $('body').append(this.form);
         this.form.css('left', this.area.offset().left + 'px');

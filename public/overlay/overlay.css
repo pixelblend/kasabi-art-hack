@@ -3,6 +3,22 @@
 	z-index: 5000;
 }
 
+#image-annotate-edit-form .suggested-sitters {
+	display: block;
+}
+
+#image-annotate-edit-form .suggested-sitters a {
+	display: inline;
+	text-decoration: underline;
+	background: none;
+	border: none;
+	float: none;
+	height: auto;
+	width: auto;
+	padding: 0;
+	margin: 20px 0;
+}
+
 /* artfinder.com: hide zoom UI */
 .depictions .frame i,
 .depictions .frame span {

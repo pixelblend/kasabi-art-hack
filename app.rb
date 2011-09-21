@@ -10,10 +10,9 @@ class CultureHack < Sinatra::Base
     headers "Access-Control-Allow-Origin" => "*"
   end
 
-  get '/status' do
   use Rack::LinkedData::ContentNegotiation
   
-  get '/' do
+  get '/status' do
     "Hello World! :)"
   end
   

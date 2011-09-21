@@ -1,6 +1,5 @@
 /// <reference path="jquery-1.2.6-vsdoc.js" />
 (function($) {
-
     $.fn.annotateImage = function(options) {
         ///	<summary>
         ///		Creates annotations on the given image.
@@ -441,4 +440,4 @@
         this.editable = true;
     };
 
-})(jQuery);
+})(arthack.jQuery);

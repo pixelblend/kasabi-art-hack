@@ -1,9 +1,10 @@
-function App(){
+function App($){
 	var self = this;
 	
 	this.init = function(){
-		self.picture = $("#picture");
+		self.picture = $("#picture")  //"#contentMain #zoomImage img");
 		//self.picture.bind("load", self.loadAnnotations);
+console.log("annotate!")
 		self.loadAnnotations();
 	};
 	
@@ -19,6 +20,7 @@ function App(){
 	};
 	
 	this.addDetectedFaces = function(annotations){
+		console.log(self.picture)
 		var faces = self.picture.faceDetection();
 		$.each(faces, function(i, coords){
 			annotations.push({
@@ -33,5 +35,5 @@ function App(){
 	}
 }
 
-var app = new App;
-$(app.init);
+//var app = new App(arthack.jQuery);
+//arthack.jQuery(app.init);

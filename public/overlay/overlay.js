@@ -1,9 +1,11 @@
-(function () {
+var arthack = (function () {
 if (typeof console == "undefined") console = { log: function(data){} };
 
 function Overlay(){
 
 	var FREEBASE_TOPICS = ["people/person"];
+
+	var loadedScripts = [];
 
 	var self = this;
 	var messageEvent, sourceURL, Zotero = {};
@@ -18,12 +20,18 @@ function Overlay(){
 
 	this.start = function(){
 		console.log("Everything's ready");
-		var $ = self.jQuery;
-		var suggestInput = $("body").append('<div id="art-hack"><input type="text" id="art-hack-suggest"/></div>');
-		$("#art-hack-suggest").suggest({type:FREEBASE_TOPICS})
-							  .bind("fb-select", function(e, data) {
-							    console.log("fb-select", data);
-							  });
+		//self.removeLoadedScripts();
+		//var $ = self.jQuery;
+		//var suggestInput = $("body").append('<div id="art-hack"><input type="text" id="art-hack-suggest"/></div>');
+		//$("#art-hack-suggest").suggest({type:FREEBASE_TOPICS})
+		//					  .bind("fb-select", function(e, data) {
+		//					    console.log("fb-select", data);
+		//					  });
+		//	// App
+		self.loadJS(self.sourceURL + "/../js/app.js", "app", function () {
+			var app = new App(self.jQuery);
+			app.init();
+		});
 	};
 
 	// determine the base URL; remove the loader script element
@@ -58,13 +66,22 @@ function Overlay(){
 
 		if (callback) s.addEventListener("load", callback, true);
 		document.body.appendChild(s);
+		loadedScripts.push(s);
+	};
+
+	this.removeLoadedScripts = function() {
+		var $ = self.jQuery;
+		loadedScripts.forEach(function (item, index) {
+			item.parentNode.removeChild(item);
+		})
 	};
 
 	// load jQuery
 	this.loadJQuery = function(callback){
-		// if jQuery is already loaded, just run the callback
-		if (document.getElementById("mendeley-jquery")) return callback ? callback() : true;
-		self.loadJS("https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js", "mendeley-jquery", function () {
+		self.loadJS(self.sourceURL + "/../js/jquery.min.js", "mendeley-jquery", function () {
+	console.log(jQuery)
+			self.jQuery = jQuery.noConflict(true); // refer to jQuery as "self.jQuery"
+	console.log(self.jQuery)
 			self.loadScripts(callback);
 		});
 	};
@@ -73,29 +90,26 @@ function Overlay(){
 		var numScriptsLoaded = 0;
 		var loaded = function () {
 			numScriptsLoaded++;
-			if (numScriptsLoaded === 7) {
+			if (numScriptsLoaded === 6) {
 				callback();
 			}
 		};
 		// Freebase
-		self.loadJS("http://freebaselibs.com/static/suggest/1.3/suggest.min.js", "freebase-suggest", loaded);
-		self.loadCSS("http://freebaselibs.com/static/suggest/1.3/suggest.min.css");
+		self.loadJS(self.sourceURL + "/../js/suggest.min.js", "freebase-suggest", loaded);
+		self.loadCSS(self.sourceURL + "/../js/suggest.min.css");
 
-		self.loadJS("https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js", "ui", loaded);
+		self.loadJS(self.sourceURL + "/../js/jquery-ui.js", "ui", loaded);
 		self.loadJS(self.sourceURL + "/../js/jquery.facedetection/facedetection/ccv.js", "ccv", loaded);
 		self.loadJS(self.sourceURL + "/../js/jquery.facedetection/facedetection/face.js", "face", loaded);
 		self.loadJS(self.sourceURL + "/../js/jquery.facedetection/jquery.facedetection.js", "facedetection", loaded);
 
 		// Annotate
 		self.loadJS(self.sourceURL + "/../js/jquery.annotate/jquery.annotate.js", "annotate", loaded);
-
-		// App
-		self.loadJS(self.sourceURL + "/../js/app.js", "app", loaded);
+		self.loadCSS(self.sourceURL + "/../js/jquery.annotate/annotation.css");
 	};
 
 	// called after jQuery is loaded
 	this.jQueryLoaded = function(callback){
-		self.jQuery = jQuery.noConflict(true); // refer to jQuery as "self.jQuery"
 		window.addEventListener("message", self.receiveMessage, true); // listen for messages
 		//self.createOverlay(); // create the sidebar overlay
 		self.start();
@@ -287,6 +301,7 @@ function Overlay(){
 	};
 }
 
-var overlay = new Overlay;
-overlay.init();
+return new Overlay;
 })();
+
+arthack.init();

@@ -30,7 +30,7 @@ function Overlay(){
 		//	// App
 		self.loadJS(self.sourceURL + "/../js/app.js", "app", function () {
 			var app = new App(self.jQuery);
-			app.init();
+			app.init("#contentMain #zoomImage img");
 		});
 	};
 

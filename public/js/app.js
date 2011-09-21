@@ -1,10 +1,9 @@
 function App($){
 	var self = this;
 	
-	this.init = function(){
-		self.picture = $("#picture")  //"#contentMain #zoomImage img");
+	this.init = function(imageEl){
+		self.picture = $(imageEl);
 		//self.picture.bind("load", self.loadAnnotations);
-console.log("annotate!")
 		self.loadAnnotations();
 	};
 	

@@ -1,19 +1,14 @@
 function App(){
 	var self = this;
-	var picture, pictureNode;
 	
 	this.init = function(){
-		$("#picture").bind("load", self.setupAnnotations);
-		$("#content").delegate("click", ".face", self.annotationSelected);
-	};
-	
-	this.setupAnnotations = function(event){
-		self.pictureNode = this;
-		self.picture = $(this);
+		self.picture = $("#picture");
+		//self.picture.bind("load", self.loadAnnotations);
 		self.loadAnnotations();
 	};
 	
 	this.loadAnnotations = function(){
+		// TODO: fetch with GET, callback = self.annotationsLoaded
 		var annotations = [];
 		self.annotationsLoaded({ annotations: annotations })
 	};
@@ -36,14 +31,6 @@ function App(){
 		});
 		return annotations;
 	}
-	
-	this.saveAnnotations = function(){
-		
-	};
-	
-	this.annotationSelected = function(e){
-		
-	};
 }
 
 var app = new App;

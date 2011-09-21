@@ -18,6 +18,7 @@
         this.editable = opts.editable;
         this.useAjax = opts.useAjax;
         this.notes = opts.notes;
+		this.onReadyCallback = opts.ready;
 
         // Add the canvas
         this.canvas = $('<div class="image-annotate-canvas"><div class="image-annotate-view"></div><div class="image-annotate-edit"><div class="image-annotate-edit-area"></div></div></div>');
@@ -78,6 +79,7 @@
         deleteUrl: 'your-delete.rails',
         editable: true,
         useAjax: true,
+		ready: function(){},
         notes: new Array()
     };
 
@@ -99,6 +101,7 @@
         $.getJSON(image.getUrl, function(data) {
             image.notes = data;
             $.fn.annotateImage.load(image);
+			if (typeof image.onReadyCallback == "function") image.onReadyCallback();
         });
     };
 
@@ -318,6 +321,8 @@
         ///		Defines a annotation area.
         ///	</summary>
         this.image = image;
+
+		note.editable = true; // always editable
 
         this.note = note;
 

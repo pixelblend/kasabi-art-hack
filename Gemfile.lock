@@ -3,7 +3,6 @@ GEM
   specs:
     addressable (2.2.4)
     facets (2.9.2)
-    ffi (1.0.9)
     haml (3.1.3)
     httpclient (2.2.1)
     json (1.6.1)
@@ -29,11 +28,6 @@ GEM
     mocha (0.10.0)
       metaclass (~> 0.0.1)
     nokogiri (1.5.0)
-    pho (0.7.9)
-      httpclient (>= 2.1.3.1)
-      json (>= 1.1.3)
-      mime-types (>= 1.16)
-      mocha (>= 0.9.5)
     rack (1.3.3)
     rack-linkeddata (0.3.0)
       linkeddata (~> 0.3.0)
@@ -47,9 +41,6 @@ GEM
       rdf (~> 0.3.0)
     rdf-n3 (0.3.5)
       rdf (>= 0.3.3)
-    rdf-raptor (0.4.1)
-      ffi (>= 1.0)
-      rdf (~> 0.3.0)
     rdf-rdfa (0.3.6)
       facets (>= 2.9.1)
       haml (>= 3.0.0)
@@ -74,9 +65,7 @@ PLATFORMS
 DEPENDENCIES
   kasabi
   linkeddata
-  pho (= 0.7.9)
   rack-linkeddata
   rdf
-  rdf-raptor
   sinatra
   uuid

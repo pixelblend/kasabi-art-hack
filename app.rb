@@ -34,8 +34,8 @@ class CultureHack < Sinatra::Base
     Annotation.describe(params[:id])
   end
   
-  post '/annotations/:id/?' do
-    Annotation.update( params )
-  end
+#  post '/annotations/:id/?' do
+#    Annotation.update( params )
+#  end
   
 end

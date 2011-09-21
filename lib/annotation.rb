@@ -1,7 +1,7 @@
 require 'kasabi'
 require 'linkeddata'
 require 'uuid'
-require 'pho'
+#require 'pho'
 
 class Annotation
   ATTRIBUTES = %w{top left width height text id}
@@ -60,18 +60,18 @@ class Annotation
     return repository, uri          
   end
     
-  def self.update( params )
-    uri = "#{API_DOMAIN}/annotations/#{params[:id]}"
-    sparql = dataset.sparql_endpoint_client
-    stored = sparql.describe_uri( uri )
-    latest, uri = create_rdf( params, RDF::URI.new( uri ) )
-    
-    cs = Pho::Update::ChangesetBuilder.build(uri,
-        JSON.parse( stored.dump(:json) ), 
-        JSON.parse( latest.dump(:json) ), "Update from user")
-
-    dataset.store_api_client.apply_changeset( cs.to_rdf() )
-  end
+#  def self.update( params )
+#    uri = "#{API_DOMAIN}/annotations/#{params[:id]}"
+#    sparql = dataset.sparql_endpoint_client
+#    stored = sparql.describe_uri( uri )
+#    latest, uri = create_rdf( params, RDF::URI.new( uri ) )
+#    
+#    cs = Pho::Update::ChangesetBuilder.build(uri,
+#        JSON.parse( stored.dump(:json) ), 
+#        JSON.parse( latest.dump(:json) ), "Update from user")
+#
+#    dataset.store_api_client.apply_changeset( cs.to_rdf() )
+#  end
   
   def self.list(image)
     @dataset = Kasabi::Dataset.new("http://data.kasabi.com/dataset/government-art-collection-annotations", {:apikey => ENV['KASABI_API_KEY']})

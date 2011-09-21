@@ -2,3 +2,9 @@
 .fbs-flyout-pane {
 	z-index: 5000;
 }
+
+/* artfinder.com: hide zoom UI */
+.depictions .frame i,
+.depictions .frame span {
+	display: none;
+}

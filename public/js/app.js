@@ -14,7 +14,7 @@ function App(){
 	};
 		
 	this.annotationsLoaded = function(data){
-		annotations = this.addDetectedFaces(data.annotations);		
+		annotations = this.addDetectedFaces(data.annotations);
 		self.picture.annotateImage({ editable: true, useAjax: false, notes: annotations });		
 	};
 	

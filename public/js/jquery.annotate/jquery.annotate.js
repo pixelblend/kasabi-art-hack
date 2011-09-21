@@ -245,7 +245,9 @@
 
 		var form = $("<form/>");
 		var label = $("<label/>", { "for": "image-annotate-text" }).text("Name ").appendTo(form);
-		var input = $("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" }).val(this.note.text).appendTo(label)
+		$("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" }).val(this.note.text).appendTo(label);
+		$("<input/>", { type: "hidden", id: "image-annotate-uri", name: "uri" }).appendTo(form);
+		
         this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form);
 
         $('body').append(this.form);

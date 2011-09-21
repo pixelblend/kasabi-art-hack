@@ -1,6 +1,7 @@
 require 'kasabi'
 require 'linkeddata'
 require 'uuid'
+require 'pho'
 
 class Annotation
   ATTRIBUTES = %w{top left width height text id}
@@ -17,7 +18,7 @@ class Annotation
   def self.sparql
     dataset.sparql_endpoint_client
   end
-  
+    
   def self.describe(id)
     uri = "#{API_DOMAIN}/annotations/#{id}"
     repository = RDF::Repository.new
@@ -35,9 +36,16 @@ class Annotation
   
   def self.save( params )
     store = dataset.store_api_client
-    uri = RDF::URI.new("#{API_DOMAIN}/annotations/#{ID.generate}")
-    
-    
+    repository, uri = create_rdf( params )
+    store.store_data( repository.dump(:rdfxml) )
+    return uri      
+  end
+
+  def self.create_rdf( params, uri=nil)
+    if uri == nil      
+      uri = RDF::URI.new("#{API_DOMAIN}/annotations/#{ID.generate}")
+    end
+        
     repository = RDF::Repository.new
     
     repository << [ uri, RDF.type, ANNOTATION_NS.Annotation ]
@@ -48,9 +56,21 @@ class Annotation
     repository << [ uri, ARTHACK.height, params[:height] ]
     repository << [ uri, ARTHACK.left, params[:left] ]
     repository << [ uri, RDF::DC.subject, RDF::URI.new( params[:subject] ) ] if params[:subject]
+        
+    return repository, uri          
+  end
     
-    store.store_data( repository.dump(:rdfxml) )
-    return uri      
+  def self.update( params )
+    uri = "#{API_DOMAIN}/annotations/#{params[:id]}"
+    sparql = dataset.sparql_endpoint_client
+    stored = sparql.describe_uri( uri )
+    latest, uri = create_rdf( params, RDF::URI.new( uri ) )
+    
+    cs = Pho::Update::ChangesetBuilder.build(uri,
+        JSON.parse( stored.dump(:json) ), 
+        JSON.parse( latest.dump(:json) ), "Update from user")
+
+    dataset.store_api_client.apply_changeset( cs.to_rdf() )
   end
   
   def self.list(image)

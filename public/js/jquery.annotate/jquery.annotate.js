@@ -265,7 +265,7 @@
 		$("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" })
             .val(this.note.text)
             .appendTo(label)
-            .suggest({type:["people/person"]})
+            .suggest({type:"/people/person"})
               .bind("fb-select", function(e, data) {
                 console.log("fb-select", data);
                 subject.val("http://rdf.freebase.com/ns" + data.id);

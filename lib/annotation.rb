@@ -4,7 +4,7 @@ class Annotation
   ATTRIBUTES = %w{top left width height text id}
   
   def self.list(image)
-    @dataset = Kasabi::Dataset.new("http://data.kasabi.com/dataset/government-art-collection-annotations", {:apikey => CONFIG['api_key']})
+    @dataset = Kasabi::Dataset.new("http://data.kasabi.com/dataset/government-art-collection-annotations", {:apikey => ENV['KASABI_API_KEY']})
     sparql = @dataset.sparql_endpoint_client()
     query = <<EOF
     prefix a: <http://www.w3.org/2000/10/annotation-ns#>

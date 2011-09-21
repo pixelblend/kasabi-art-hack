@@ -4,8 +4,6 @@ require "bundler/setup"
 require 'sinatra'
 require File.dirname(__FILE__)+'/lib/annotation'
 
-CONFIG = YAML::load( File.open( 'config.yml' ) )
-
 class CultureHack < Sinatra::Base
   get '/' do
     "Hello World! :)"

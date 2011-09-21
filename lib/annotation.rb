@@ -9,9 +9,13 @@ class Annotation
   ARTHACK = RDF::Vocabulary.new("http://kasabi-art-hack.heroku.com/schema#")
   ID = UUID.new
   
+  def self.dataset
+    @@dataset ||= Kasabi::Dataset.new("http://data.kasabi.com/dataset/government-art-collection-annotations", 
+                                    {:apikey => ENV['KASABI_API_KEY']})
+  end
+  
   def self.sparql
-    @dataset ||= Kasabi::Dataset.new("http://data.kasabi.com/dataset/government-art-collection-annotations", {:apikey => ENV['KASABI_API_KEY']})
-    @dataset.sparql_endpoint_client()
+    dataset.sparql_endpoint_client
   end
   
   def self.describe(id)
@@ -19,21 +23,22 @@ class Annotation
     repository = RDF::Repository.new
     
     repository << sparql.describe_uri(uri).statements
+    
     subject = repository.first_object [nil, RDF::DC.subject, nil]
-    subject_graph = RDF::Graph.load subject
-
+    subject = "#{subject}.rdf" if subject.to_s.include?('kasabi')
+    
+    subject_graph = RDF::Graph.load subject    
     repository << subject_graph.statements
     
     repository
   end
   
   def self.save( params )
-    @dataset = DATASET
-    store = @dataset.store_api_client()
+    store = dataset.store_api_client
     uri = RDF::URI.new("#{API_DOMAIN}/annotations/#{ID.generate}")
     
     
-    repository = RDF::Repository.new()
+    repository = RDF::Repository.new
     
     repository << [ uri, RDF.type, ANNOTATION_NS.Annotation ]
     repository << [ uri, ANNOTATION_NS.annotates, RDF::URI.new( params[:image] ) ]

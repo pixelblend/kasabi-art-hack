@@ -242,6 +242,13 @@
         var form = $('<div id="image-annotate-edit-form"><form><textarea id="image-annotate-text" name="text" rows="3" cols="30">' + this.note.text + '</textarea></form></div>');
         this.form = form;
 
+		var form = $("<form/>");
+		var label = $("<label/>", { "for": "image-annotate-text" }).text("Name ").appendTo(form);
+		$("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" }).val(this.note.text).appendTo(label);
+		$("<input/>", { type: "hidden", id: "image-annotate-uri", name: "uri" }).appendTo(form);
+		
+        this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form);
+
         $('body').append(this.form);
         this.form.css('left', this.area.offset().left + 'px');
         this.form.css('top', (parseInt(this.area.offset().top) + parseInt(this.area.height()) + 7) + 'px');

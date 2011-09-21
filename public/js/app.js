@@ -4,6 +4,7 @@ function App($){
 	this.annotationServer = "http://kasabi-art-hack.heroku.com/annotations";
 	
 	this.init = function(imageEl){
+		$.ajaxSetup({ cache: false });
 		self.picture = $(imageEl);
 		//self.picture.bind("load", self.loadAnnotations);
 		self.loadAnnotations();

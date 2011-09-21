@@ -12,11 +12,11 @@ class CultureHack < Sinatra::Base
   
   get '/annotations/?' do
     content_type 'application/json'
-    @image = params[:url] || 'http://www.gac.culture.gov.uk/images/standard/17686.jpg'
+    @image = params[:image] || 'http://www.gac.culture.gov.uk/images/standard/17686.jpg'
     Annotation.list(@image).to_json
   end
   
-  post '/annotations' do
+  post '/annotations/?' do
     uri = Annotation.save( params )
     content_type 'application/json'
     { "annotation_id" => uri.to_s }.to_json

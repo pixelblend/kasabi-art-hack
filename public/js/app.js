@@ -1,8 +1,8 @@
-function App(){
+function App($){
 	var self = this;
 	
-	this.init = function(){
-		self.picture = $("#picture");
+	this.init = function(imageEl){
+		self.picture = $(imageEl);
 		//self.picture.bind("load", self.loadAnnotations);
 		self.loadAnnotations();
 	};
@@ -14,11 +14,12 @@ function App(){
 	};
 		
 	this.annotationsLoaded = function(data){
-		annotations = this.addDetectedFaces(data.annotations);		
+		annotations = this.addDetectedFaces(data.annotations);
 		self.picture.annotateImage({ editable: true, useAjax: false, notes: annotations });		
 	};
 	
 	this.addDetectedFaces = function(annotations){
+		console.log(self.picture)
 		var faces = self.picture.faceDetection();
 		$.each(faces, function(i, coords){
 			annotations.push({
@@ -33,5 +34,5 @@ function App(){
 	}
 }
 
-var app = new App;
-$(app.init);
+//var app = new App(arthack.jQuery);
+//arthack.jQuery(app.init);

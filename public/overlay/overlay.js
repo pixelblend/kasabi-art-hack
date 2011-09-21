@@ -30,7 +30,7 @@ function Overlay(){
 			} else if (/www.gac.culture.gov.uk/.test(url)) {
 				imgSel = "#contentMain #zoomImage img";
 			} else if (/www.artfinder.com/.test(url)) {
-				imgSel = ".depictions .frame img";
+				imgSel = ".depictions .frame img, #work img";
 			}
 			app.init(imgSel);
 		});
@@ -96,9 +96,33 @@ function Overlay(){
 				callback();
 			}
 		};
+		
+		var blockUILoaded = function(){
+			self.jQuery.blockUI.defaults.css = {
+				font: "18px Helvetica",
+				padding:	"10px",
+				margin:		0,
+				width:		'30%',
+				top:		'40%',
+				left:		'35%',
+				textAlign:	'center',
+				color:		'#444',
+				border:		'3px solid #aaa',
+				borderRadius: "10px",
+				backgroundColor:'#fff',
+				cursor:		'wait'
+			};
+			self.jQuery(document).ajaxStart(function(){
+				self.jQuery.blockUI({ message: "loading/saving annotations&hellip;"});
+			}).ajaxStop(self.jQuery.unblockUI);
+		};
+		
+		// loading
+		self.loadJS(self.sourceURL + "/../js/jquery.blockUI.js", "blockui", blockUILoaded);
+		
 		// Freebase
-		self.loadJS(self.sourceURL + "/../js/suggest.min.js", "freebase-suggest", loaded);
 		self.loadCSS(self.sourceURL + "/../js/suggest.min.css");
+		self.loadJS(self.sourceURL + "/../js/suggest.min.js", "freebase-suggest", loaded);
 
 		self.loadJS(self.sourceURL + "/../js/jquery-ui.js", "ui", loaded);
 		self.loadJS(self.sourceURL + "/../js/jquery.facedetection/facedetection/ccv.js", "ccv", loaded);
@@ -106,8 +130,8 @@ function Overlay(){
 		self.loadJS(self.sourceURL + "/../js/jquery.facedetection/jquery.facedetection.js", "facedetection", loaded);
 
 		// Annotate
+		self.loadCSS(self.sourceURL + "/../js/jquery.annotate/annotation.css");		
 		self.loadJS(self.sourceURL + "/../js/jquery.annotate/jquery.annotate.js", "annotate", loaded);
-		self.loadCSS(self.sourceURL + "/../js/jquery.annotate/annotation.css");
 	};
 
 	// called after jQuery is loaded

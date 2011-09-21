@@ -28,12 +28,12 @@ function App($){
 	};
 	
 	this.addAnnotation = function(i, note){
-		console.log(note);
 		var note = new $.fn.annotateView(self.picture, {
 			top: note.positionY,
 			left: note.positionX,
 			width: note.width,
 			height: note.height,
+			text: "",
 			editable: true
 		});
         self.picture.notes.push(note);

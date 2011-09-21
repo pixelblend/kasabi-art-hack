@@ -20,9 +20,10 @@ class Annotation
     
     repository << sparql.describe_uri(uri).statements
     subject = repository.first_object [nil, RDF::DC.subject, nil]
+    raise subject.to_s
     subject_graph = RDF::Graph.load subject
-    # RDF::Writer.dump subject_graph, $stdout
-    # raise subject_graph.to_s
+    RDF::Writer.dump subject_graph, $stdout
+    raise subject_graph.to_s
     repository << subject_graph.statements
     
     repository

@@ -2,6 +2,8 @@ require "rubygems"
 require "bundler/setup"
 
 require 'sinatra'
+require 'rack/linkeddata'
+
 
 require File.dirname(__FILE__)+'/lib/annotation'
 

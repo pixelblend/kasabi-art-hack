@@ -252,7 +252,6 @@
         }
 
 		var form = $("<form/>");
-		var label = $("<label/>", { "for": "image-annotate-text" }).text("Name ").appendTo(form);
         var subject = makeHiddenElAndAppendToForm("subject", form);
         var imageHiddenField = makeHiddenElAndAppendToForm("image", form);
         imageHiddenField.val( image.get(0).src) ;
@@ -263,7 +262,9 @@
         //var width  = makeHiddenElAndAppendToForm("width", form);
         //var height = makeHiddenElAndAppendToForm("height", form);
         
-		$("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" })
+        // Subject's name field
+        var label = $("<label/>", { "for": "image-annotate-text" }).text("Who is this? ").appendTo(form);
+		var suggestInputField = $("<input/>", { type: "text", id: "image-annotate-text", name: "text", size: "30" })
             .val(this.note.text)
             .appendTo(label)
             .suggest({type:"/people/person"})
@@ -272,8 +273,18 @@
                 subject.val("http://rdf.freebase.com/ns" + data.id);
               });
 
+        // Suggested sitters
+        var sitters = $("#contentWorkSitters ul a").clone();
+        sitters.bind('click', function(evt){
+            var nameToSuggest = $(this).text().replace(/,/, '');
+            suggestInputField.val(nameToSuggest).keyup();
+            return false;
+        });
+        var suggestedSitters = $('<div class="suggested-sitters">Is this?</div>');
+        suggestedSitters.append(sitters);
 		
-        this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form);
+        this.form = $("<div/>", { id: "image-annotate-edit-form" }).append(form)
+                                                                   .append(suggestedSitters);
 
         $('body').append(this.form);
         this.form.css('left', this.area.offset().left + 'px');

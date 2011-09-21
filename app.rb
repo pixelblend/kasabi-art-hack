@@ -19,8 +19,8 @@ class CultureHack < Sinatra::Base
     set :public, File.dirname(__FILE__) + "/public"        
   end
   
-  get '/status' do
-    "Hello World! :)"
+  get '/?' do
+    File.read(File.join('public', 'index.html'))
   end
   
   get '/annotations/?' do

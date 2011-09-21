@@ -2,22 +2,25 @@
 if (typeof console == "undefined") console = { log: function(data){} };
 
 function Overlay(){
+
+	var FREEBASE_TOPICS = ["people/person"];
+
 	var self = this;
 	var messageEvent, sourceURL, Zotero = {};
 
 	this.init = function(){
-		//self.removeLoader();
+		self.removeLoader();
 		self.originalURL = window.location.href;
 		//self.originalHTML = document.documentElement.innerHTML;
-		//self.loadCSS(self.sourceURL + "/overlay.css", "mendeley-sidebar-css-loader");
+		self.loadCSS(self.sourceURL + "/overlay.css", "art-hack-css-loader");
 		self.loadJQuery(self.jQueryLoaded);
 	};
 
 	this.start = function(){
 		console.log("Everything's ready");
 		var $ = self.jQuery;
-		var suggestInput = $("body").append('<div id="freebase-info"><input type="text" id="art-hack-suggest"/></div>');
-		$("#art-hack-suggest").suggest("/people");
+		var suggestInput = $("body").append('<div id="art-hack"><input type="text" id="art-hack-suggest"/></div>');
+		$("#art-hack-suggest").suggest({type:FREEBASE_TOPICS});
 	};
 
 	// determine the base URL; remove the loader script element

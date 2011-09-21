@@ -96,7 +96,7 @@
         ///		Loads the annotations from the "getUrl" property passed in on the
         ///     options object.
         ///	</summary>
-        $.getJSON(image.getUrl + '?ticks=' + $.fn.annotateImage.getTicks(), function(data) {
+        $.getJSON(image.getUrl, function(data) {
             image.notes = data;
             $.fn.annotateImage.load(image);
         });
@@ -151,6 +151,7 @@
             // Save via AJAX
             if (image.useAjax) {
                 $.ajax({
+					type: "POST",
                     url: image.saveUrl,
                     data: form.serialize(),
                     error: function(e) { alert("An error occured saving that note.") },
@@ -403,8 +404,8 @@
 
                 if (annotation.image.useAjax) {
                     $.ajax({
-                        url: annotation.image.deleteUrl,
-                        data: form.serialize(),
+						type: "DELETE",
+                        url: annotation.image.getUrl,
                         error: function(e) { alert("An error occured deleting that note.") }
                     });
                 }
